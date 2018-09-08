@@ -9,7 +9,11 @@
 	  "https://api.openhazards.com/",
 	  "https://www.openhazards.com/",
 	  "http://api.openhazards.com/",
-	  "http://www.openhazards.com/"
+	  "http://www.openhazards.com/",
+	  "https://www.realtor.com/",
+	  "https://www.trulia.com/",
+	  "http://www.realtor.com/",
+	  "http://www.trulia.com/"
 	],
     "background": {
       "scripts": ["background.js"],
