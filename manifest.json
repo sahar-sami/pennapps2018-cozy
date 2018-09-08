@@ -6,7 +6,10 @@
     "permissions": [
 	  "declarativeContent",
 	  "storage",
-	  "https://www.openhazards.com/"
+	  "https://api.openhazards.com/",
+	  "https://www.openhazards.com/",
+	  "http://api.openhazards.com/",
+	  "http://www.openhazards.com/"
 	],
     "background": {
       "scripts": ["background.js"],
