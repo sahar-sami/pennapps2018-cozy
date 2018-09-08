@@ -4,7 +4,9 @@
 
 
 	var request = new XMLHttpRequest();
-	request.open('GET', 'https://www.spc.noaa.gov/wcm/data/2013_torn.csv', false);  // `false` makes the request synchronous
+	for (var x = 3; x < 8; x++){
+    var dig = x.toString();
+    request.open('GET', "https://www.spc.noaa.gov/wcm/data/" +"201" + dig +"_torn.csv", false);  // `false` makes the request synchronous
 	request.send(null);
 
 	if (request.status === 200) {
@@ -52,4 +54,5 @@
 	}
 	console.log(matchArray.length); // Number of tornadoes
 	console.log(magSum / matchArray.length); // Average magnitude
+    }
 </script>
