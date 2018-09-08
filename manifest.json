@@ -1,6 +1,14 @@
- {
-    "name": "Natural Disaster Predictor",
+{
+    "name": "Getting Started Example",
     "version": "1.0",
-    "description": "Displays the risks of natural disasters in the area of the address given from a housing website.",
-    "manifest_version": 2
+    "description": "Build an Extension!",
+    "permissions": ["storage"],
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    },
+    "page_action": {
+      "default_popup": "popup.html"
+           }
+    },
   }
