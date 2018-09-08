@@ -3,9 +3,21 @@ window.onload = function (){
 	xhr.open('GET', 'http://api.openhazards.com/GetEarthquakeProbability?q=San+Francisco,+CA&m=6.8&r=100', false);
 	console.log(xhr.responseText);
     xhr.send();
+    var highrisk = 0, midrisk = 0, lowrisk = 0;
+    var risk;
     prob = earthquake(xhr.responseText);
-    
-    var risk = "mid";
+    if (prob >= .25){highrisk +=1;}
+    else if (prob >= .05 && prob < .25) {midrisk += 1;}
+    else {lowrisk += 1;}
+    if (highrisk >= 1){
+        risk = "high";
+        }
+    else if (midrisk >=1){
+        risk = "mid";
+    }
+    else{
+        risk = "low";
+    }
     displayRisk(risk);
 }
 
