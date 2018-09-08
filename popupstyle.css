@@ -1,0 +1,14 @@
+button {
+          height: 30px;
+          width: 30px;
+          outline: none;
+        }
+        
+body {
+    background-color: #f7f7f9;
+}
+
+h1 {
+    color: #040751;
+    font-family: sans-serif;
+}
