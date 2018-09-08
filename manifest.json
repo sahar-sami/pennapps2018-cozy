@@ -9,7 +9,8 @@
 	  "https://www.openhazards.com/",
 	  "http://api.openhazards.com/",
 	  "http://www.openhazards.com/",
-      "http://ajax.googleapis.com/",
+	  "http://ajax.googleapis.com/",
+	  "http://surge.srcc.lsu.edu/files/globalpeaksurgedb.csv",
       "declarativeContent"
 	],
     "background": {
