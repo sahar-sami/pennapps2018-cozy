@@ -9,6 +9,12 @@
       "persistent": false
     },
     "page_action": {
-      "default_popup": "popup.html"
-           }
+      "default_popup": "popup.html",
+      "devault_icon": {
+          "16": "icon.png"
+      }
+           },
+    "icons": {
+        "16": "icon.png"
+    }
   }
