@@ -1,18 +1,25 @@
 window.onload = function (){
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', 'http://api.openhazards.com/GetEarthquakeProbability?q=San+Francisco,+CA&m=6.8&r=100', false);
-	//xhr.responseType = 'blob';
 	console.log(xhr.responseText);
     xhr.send();
     prob = earthquake(xhr.responseText);
-   // console.log(prob);
+    
     var risk = "mid";
     displayRisk(risk);
 }
 
-function earthquake(xml){
-    
-    return prob;
+function earthquake(response){
+    var parser, xmlDoc;
+    parser = new DOMParser();
+    xmlDoc = parser.parseFromString(response, "application/xml");
+    var prob = null;
+    do{
+    prob = xmlDoc.getElementsByTagName("prob")[0].childNodes[0].nodeValue;
+    }while (prob == undefined)
+    var percent = parseFloat(prob.toString());
+    console.log(percent);
+    return percent;
 }
 
 function displayRisk(risk){
