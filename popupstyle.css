@@ -1,3 +1,8 @@
+html{
+    width: 300px;
+    height: 300px;
+}
+
 button {
           height: 30px;
           width: 30px;
@@ -11,4 +16,16 @@ body {
 h1 {
     color: #040751;
     font-family: sans-serif;
+}
+
+#dial{
+    width: 75px;
+    height: 75px;
+    float: left;
+}
+
+p{
+    align-content: space-around;
+    font-family: sans-serif;
+    font-size: 16pt;
 }
