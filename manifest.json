@@ -15,6 +15,7 @@
 	  "https://trulia.com/",
 	  "http://trulia.com/",
 	  "http://realtor.com/",
+	    "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js",
       "declarativeContent"
 	],
     "background": {
