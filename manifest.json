@@ -1,7 +1,7 @@
 {
-    "name": "Getting Started Example",
+    "name": "Natural Disaster Predictor",
     "version": "1.0",
-    "description": "Build an Extension!",
+    "description": "Displays the risks of various natural disasters in the area near an address found from a housing website",
     "permissions": ["storage"],
     "background": {
       "scripts": ["background.js"],
