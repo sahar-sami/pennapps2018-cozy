@@ -2,10 +2,10 @@
     "name": "Natural Disaster Predictor",
     "version": "1.0",
     "manifest_version": 2,
-	"content_scripts": [{
-     "js": ["jquery.min.js", "YourJavaScriptFile.js"],
-     "matches": ["http://*/*", "https://*/*"]
-   }],
+	//"content_scripts": [{
+    // "js": ["jquery.min.js", "YourJavaScriptFile.js"],
+    // "matches": ["http://*/*", "https://*/*"]
+ //  }],
     "description": "Displays the risks of various natural disasters in the area near an address found from a housing website",
     "permissions": [
 	  "storage",
