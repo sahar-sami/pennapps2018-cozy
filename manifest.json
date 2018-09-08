@@ -1,6 +1,6 @@
  {
-    "name": "Getting Started Example",
+    "name": "Natural Disaster Predictor",
     "version": "1.0",
-    "description": "Build an Extension!",
+    "description": "Displays the risks of natural disasters in the area of the address given from a housing website.",
     "manifest_version": 2
   }
