@@ -1,6 +1,6 @@
 window.onload = function (){
     /*Get the address from the website in the form of a string*/
-    var address;
+    var address = "1584 Dillon Rd, Ambler, PA 19002";
     var highrisk = 0, midrisk = 0, lowrisk = 0;
     var risk;
     var tprob = trequest();
@@ -52,8 +52,9 @@ window.onload = function (){
 
 function eqrequest(address){
    //Manipulate address so that it can be used here
-    var q = "San Francisco, CA";
-    q = q.replace(' ', '+')
+    var q = address;
+    q = q.replace(/\s+/g, '+')
+    console.log(q);
     var xhr = new XMLHttpRequest();
 	xhr.open('GET', 'http://api.openhazards.com/GetEarthquakeProbability?q=' + q + '&m=6&r=100', false);
 	console.log(xhr.responseText);
@@ -152,14 +153,10 @@ function displayRisk(risk){
 
 function hrequest(){
 	
-	var latit = 32.303464; // Hardcoded location
-	var longit = -100.770321;
+	var latit = 40.550473; // Hardcoded location
+	var longit = -74.305870;
 	var request = new XMLHttpRequest();
-	/*for (var x = 0; x < 16; x++){
-    var dig = x.toString();
-	if (dig.length == 1){
-	dig = "0" + dig;	
-	} */
+	
     request.open('GET', "http://surge.srcc.lsu.edu/files/globalpeaksurgedb.csv", false);  // `false` makes the request synchronous
 	request.send(null);
 	if (request.status === 200) {
