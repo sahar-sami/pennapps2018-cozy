@@ -1,9 +1,13 @@
+var longit;
+var latit;
+
 window.onload = function (){
     /*Get the address from the website in the form of a string*/
     var address;
     var highrisk = 0, midrisk = 0, lowrisk = 0;
     var risk;
     var tprob = trequest();
+	
     if (tprob >= 50){
         highrisk +=1;
         document.getElementById('tornado').innerHTML = "High risk of tornadoes.";
@@ -46,6 +50,22 @@ window.onload = function (){
     displayRisk(risk);
 }
 
+function addressToCoor(formattedAdr) {
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBNTp0Xlgejxn7isVSaX6CgipMOSfgR5r4', true);
+	xhr.responseType = 'json';
+	xhr.onload = function() {
+	  var status = xhr.status;
+	  var loc = xhr.response;
+	  console.log(loc);
+	  console.log(loc.results[0].geometry.location.lat);
+	  latit = loc.results[0].geometry.location.lat;
+	  console.log(loc.results[0].geometry.location.lng);
+	  longit = loc.results[0].geometry.location.lng;
+	};
+	xhr.send();
+};
+
 function eqrequest(address){
    //Manipulate address so that it can be used here
     var q = "San Francisco, CA";
@@ -80,9 +100,6 @@ function earthquake(response){
 
 function trequest(){
     var tornadoNum = 0;
-    var latit = 32.303464; // Hardcoded location
-	var longit = -100.770321;
-
 
 	var request = new XMLHttpRequest();
 	for (var x = 3; x < 8; x++){
