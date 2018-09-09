@@ -3,7 +3,7 @@ var latit;
 
 window.onload = function (){
     /*Get the address from the website in the form of a string*/
-    var address;
+    var address = "1584 Dillon Rd, Ambler, PA 19002";
     var highrisk = 0, midrisk = 0, lowrisk = 0;
     var risk;
     var tprob = trequest();
@@ -31,12 +31,14 @@ window.onload = function (){
         document.getElementById('earthquake').innerHTML = "Slight risk of earthquakes.";
     }
     else if (eqprob == null){
-        document.getElementById('earthquake').innerHTML = "Earthquake risk not found.";
+        document.getElementById('earthquake').innerHTML = "";
     } // say that data couldn't be found
     else {
         lowrisk += 1
         document.getElementById('earthquake').innerHTML = "Low risk of earthquakes.";
     }
+    
+    var hprob = hrequest();
     
     if (highrisk >= 1){
         risk = "high";
@@ -48,8 +50,16 @@ window.onload = function (){
         risk = "low";
     }
     displayRisk(risk);
+    console.log(window.location.hostname);
 }
 
+function addressFormat(address){
+    var q = address;
+    q = q.replace(/\s+/g, '+');
+    return q;
+}
+
+<<<<<<< HEAD
 function addressToCoor(formattedAdr) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBNTp0Xlgejxn7isVSaX6CgipMOSfgR5r4', true);
@@ -65,11 +75,13 @@ function addressToCoor(formattedAdr) {
 	};
 	xhr.send();
 };
+=======
+>>>>>>> 6eed3962c0ab808b8539aed963a2a4f063034ad5
 
 function eqrequest(address){
    //Manipulate address so that it can be used here
-    var q = "San Francisco, CA";
-    q = q.replace(' ', '+')
+    var q = addressFormat(address);
+    console.log(q);
     var xhr = new XMLHttpRequest();
 	xhr.open('GET', 'http://api.openhazards.com/GetEarthquakeProbability?q=' + q + '&m=6&r=100', false);
 	console.log(xhr.responseText);
@@ -161,3 +173,77 @@ function displayRisk(risk){
     document.getElementById('dial').src=risk + "risk.png";
 }
 
+
+
+function hrequest(){
+	
+	var latit = 40.550473; // Hardcoded location
+	var longit = -74.305870;
+	var request = new XMLHttpRequest();
+	
+    request.open('GET', "http://surge.srcc.lsu.edu/files/globalpeaksurgedb.csv", false);  // `false` makes the request synchronous
+	request.send(null);
+	if (request.status === 200) {
+	  //console.log(request.responseText);
+	  var dataset = request.responseText;
+	  console.log(dataset);
+	  var dataArray = dataset.split("\r");
+	  console.log(dataArray);
+	  var dataArray2d = new Array();
+	  for (var i = 0; i < dataArray.length; i++) {
+		dataArray2d[i] = dataArray[i].split(",");
+	  }
+	  console.log(dataArray2d);
+	}
+	
+	var latInd;
+	var longInd;
+	var magInd;
+	
+	for (var i = 0; i < dataArray2d[0].length; i++) {
+		if (dataArray2d[0][i] == "Lat") {
+			latInd = i;
+		}
+		else if (dataArray2d[0][i] == "Lon") {
+			longInd = i;
+		}
+		else if (dataArray2d[0][i] == "Surge_ft") {
+			magInd = i;
+		}
+		
+	}//
+	var matchArray = new Array();
+	for (var i = 0; i < dataArray2d.length; i++) {
+		if (dataArray2d[i][0].slice(0,3)=="20") {
+			matchArray.push(i);
+		}
+	}
+	
+	for (var i = 0; i < matchArray.length; i++) {
+		if (Math.round(latit) != Math.round(dataArray2d[i][latInd])) {
+			matchArray.splice(i,1);
+		}
+	}
+	
+	for (var i = 0; i < matchArray.length; i++) {
+		if (Math.round(longit) != Math.round(dataArray2d[i][longInd])) {
+			matchArray.splice(i, 1);
+		}
+	}
+	
+	var magSum = 0;
+	for (var i = 0; i < matchArray.length; i++) {
+		if (dataArray2d[matchArray[i]][magInd]!="") {
+			magSum += parseInt(dataArray2d[matchArray[i]][magInd]);
+		}
+		else{
+			magSum += parseInt(dataArray2d[matchArray[i]][magInd+2]);
+		}
+	}
+	console.log(matchArray.length); // Number of hurricanes
+	console.log(magSum / matchArray.length); // Average magnitude
+    
+    return matchArray.length;
+}
+    
+   
