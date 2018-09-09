@@ -4,9 +4,9 @@ window.onload = function (){
     var highrisk = 0, midrisk = 0, lowrisk = 0;
     var risk;
     var tprob = trequest();
-    var eqprob = eqrequest();
+   // var eqprob = eqrequest(address);
     
-    if (eqprob >= 25){highrisk += 1;}
+    /*if (eqprob >= 25){highrisk += 1;}
     else if (eqprob >= 5 && eqprob < 25) {midrisk += 1;}
     else {lowrisk += 1;}
     
@@ -15,18 +15,19 @@ window.onload = function (){
         }
     else if (midrisk >=1){
         risk = "mid";
-    }
-    else{
+    }*/
+    //else{
         risk = "low";
-    }
+    //}
     displayRisk(risk);
 }
 
-function eqrequest(){
+function eqrequest(address){
    //Manipulate address so that it can be used here
-    var q = "San+Francisco,+CA";
+    var q = "San Francisco, CA";
+    q = q.replace(/\s+/g, '+')
     var xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://api.openhazards.com/GetEarthquakeProbability?q=San+Francisco,+CA&m=6.8&r=100', false);
+	xhr.open('GET', 'http://api.openhazards.com/GetEarthquakeProbability?q=' + q + '&m=6&r=100', false);
 	console.log(xhr.responseText);
     xhr.send();
     prob = earthquake(xhr.responseText);

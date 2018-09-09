@@ -2,11 +2,14 @@
       chrome.declarativeContent.onPageChanged.addRules([{
        conditions: [
           new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { hostEquals: 'www.trulia.com'}
+            pageUrl: {urlContains: 'www.trulia.com/p/'}
           }),
           new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: {hostEquals: 'www.realtor.com'}
-          })
+            pageUrl: {urlContains: 'www.realtor.com/realestateandhomes-detail/'}
+          }),
+           new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: {urlContains: 'www.zillow.com/homedetails/' }          
+           })
         ],
             actions: [new chrome.declarativeContent.ShowPageAction()]
       }]);
