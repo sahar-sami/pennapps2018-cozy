@@ -3,14 +3,27 @@ var latit;
 
 window.onload = function (){
     /*Get the address from the website in the form of a string*/
-    var address = "1584 Dillon Rd, Ambler, PA 19002";
+	chrome.tabs.query({ active: true, currentWindow: true}, function() {
+		//for (var i = 0; i < tabs.length; i++)
+		if (typeof tabs === 'undefined') {
+			// the variable is defined
+			//chrome.tabs.query({ active: true, currentWindow: true}, checkActive());
+			console.log("not loaded yet");
+		}
+		else {
+			console.log("Length: " + tabs.length);
+		}
+	});
+    var address = "100 Technology Dr, Edison, NJ 08837";
     var highrisk = 0, midrisk = 0, lowrisk = 0;
     var risk;
     var tprob = trequest();
 	
 	addressToCoor(addressFormat(address));
 	
-    if (tprob >= 50){
+    hrequest();
+	
+	if (tprob >= 50){
         highrisk +=1;
         document.getElementById('tornado').innerHTML = "High risk of tornadoes.";
     }
@@ -172,9 +185,9 @@ function displayRisk(risk){
     document.getElementById('dial').src=risk + "risk.png";
 }
 
-
-
 function hrequest(){
+	
+	console.log("Entered hrequest");
 	
 	var latit = 40.550473; // Hardcoded location
 	var longit = -74.305870;
@@ -185,9 +198,7 @@ function hrequest(){
 	if (request.status === 200) {
 	  //console.log(request.responseText);
 	  var dataset = request.responseText;
-	  console.log(dataset);
 	  var dataArray = dataset.split("\r");
-	  console.log(dataArray);
 	  var dataArray2d = new Array();
 	  for (var i = 0; i < dataArray.length; i++) {
 		dataArray2d[i] = dataArray[i].split(",");
@@ -212,23 +223,28 @@ function hrequest(){
 		
 	}//
 	var matchArray = new Array();
+	
 	for (var i = 0; i < dataArray2d.length; i++) {
-		if (dataArray2d[i][0].slice(0,3)=="20") {
+		if (dataArray2d[i][0].slice(0,2)=="20") {
 			matchArray.push(i);
 		}
 	}
+	console.log("Time matches: " + matchArray.length);
 	
 	for (var i = 0; i < matchArray.length; i++) {
-		if (Math.round(latit) != Math.round(dataArray2d[i][latInd])) {
-			matchArray.splice(i,1);
-		}
-	}
-	
-	for (var i = 0; i < matchArray.length; i++) {
-		if (Math.round(longit) != Math.round(dataArray2d[i][longInd])) {
+		if (Math.abs(latit - dataArray2d[i][latInd]) > 2) {
 			matchArray.splice(i, 1);
 		}
 	}
+	console.log("Lat matches: " + matchArray.length);
+	
+	for (var i = 0; i < matchArray.length; i++) {
+		if (Math.abs(longit - dataArray2d[i][longInd]) > 2) {
+			matchArray.splice(i, 1);
+		}
+	}
+	console.log("Long matches: " + matchArray.length);
+
 	
 	var magSum = 0;
 	for (var i = 0; i < matchArray.length; i++) {
@@ -241,8 +257,61 @@ function hrequest(){
 	}
 	console.log(matchArray.length); // Number of hurricanes
 	console.log(magSum / matchArray.length); // Average magnitude
+	console.log("Exiting hrequest");
     
     return matchArray.length;
 }
-    
+
+function checkActive(tabs) {
+	//for (var i = 0; i < tabs.length; i++)
+	if (typeof tabs === 'undefined') {
+		// the variable is defined
+		//chrome.tabs.query({ active: true, currentWindow: true}, checkActive());
+		console.log("not loaded yet");
+	}
+	else {
+		console.log(tabs.length);
+	}
+}
+
+/*
+function scrapeThePage() {
+    // Keep this function isolated - it can only call methods you set up in content scripts
+    var htmlCode = document.documentElement.outerHTML;
+    return htmlCode;
+}
+
+function timeCheck() {
+	var checkExist = setInterval(function(){
+	   if (document.querySelector('#check-1')) {
+		  console.log("Exists!");
+		  clearInterval(checkExist);
+		  afterLoad();
+	   }
+	   else {console.log("CHECKING");}
+	}, 100); // check every 100ms
+}
+
+function afterLoad() {
+	document.addEventListener('DOMContentLoaded', () => {
+		// Hook up #check-1 button in popup.html
+		const fbshare = document.querySelector('#check-1');
+		fbshare.addEventListener('click', async () => {
+			// Get the active tab
+			const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+			const tab = tabs[0];
+
+			// We have to convert the function to a string
+			const scriptToExec = `(${scrapeThePage})()`;
+
+			// Run the script in the context of the tab
+			const scraped = await chrome.tabs.executeScript(tab.id, { code: scriptToExec });
+
+			// Result will be an array of values from the execution
+			// For testing this will be the same as the console output if you ran scriptToExec in the console
+			alert(scraped[0]);
+		});
+	});
+}
+*/
    
