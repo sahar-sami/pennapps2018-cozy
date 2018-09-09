@@ -4,34 +4,64 @@ window.onload = function (){
     var highrisk = 0, midrisk = 0, lowrisk = 0;
     var risk;
     var tprob = trequest();
-   // var eqprob = eqrequest(address);
+    if (tprob >= 50){
+        highrisk +=1;
+        document.getElementById('tornado').innerHTML = "High risk of tornadoes.";
+    }
+    else if (tprob >= 20 && tprob <50){
+        midrisk +=1;
+        document.getElementById('tornado').innerHTML = "Slight risk of tornadoes.";
+    }
+    else {
+        lowrisk += 1;
+        document.getElementById('tornado').innerHTML = "Low risk of tornadoes.";
+    }
+    var eqprob = eqrequest(address);
     
-    /*if (eqprob >= 25){highrisk += 1;}
-    else if (eqprob >= 5 && eqprob < 25) {midrisk += 1;}
-    else {lowrisk += 1;}
+    if (eqprob >= 25){
+        highrisk += 1;
+        document.getElementById('earthquake').innerHTML = "High risk of earthquakes.";
+    }
+    else if (eqprob >= 5 && eqprob < 25) {
+        midrisk += 1;
+        document.getElementById('earthquake').innerHTML = "Slight risk of earthquakes.";
+    }
+    else if (eqprob == null){
+        document.getElementById('earthquake').innerHTML = "Earthquake risk not found.";
+    } // say that data couldn't be found
+    else {
+        lowrisk += 1
+        document.getElementById('earthquake').innerHTML = "Low risk of earthquakes.";
+    }
     
     if (highrisk >= 1){
         risk = "high";
         }
     else if (midrisk >=1){
-        risk = "mid";
-    }*/
-    //else{
+        risk = "slight";
+    }
+    else{
         risk = "low";
-    //}
+    }
     displayRisk(risk);
 }
 
 function eqrequest(address){
    //Manipulate address so that it can be used here
     var q = "San Francisco, CA";
-    q = q.replace(/\s+/g, '+')
+    q = q.replace(' ', '+')
     var xhr = new XMLHttpRequest();
 	xhr.open('GET', 'http://api.openhazards.com/GetEarthquakeProbability?q=' + q + '&m=6&r=100', false);
 	console.log(xhr.responseText);
     xhr.send();
+    var error = "<xmlresponse><error>1</error></xmlresponse>";
+    if (xhr.responseText == error){
+        return null;
+    }
+    else{
     prob = earthquake(xhr.responseText);
     return prob;
+    }
 }
 
 function earthquake(response){
@@ -39,12 +69,13 @@ function earthquake(response){
     parser = new DOMParser();
     xmlDoc = parser.parseFromString(response, "application/xml");
     var prob = null;
-    do{
     prob = xmlDoc.getElementsByTagName("prob")[0].childNodes[0].nodeValue;
-    }while (prob == undefined)
+    if (prob == undefined){return null;}
+    else{
     var percent = parseFloat(prob.toString());
     console.log(percent);
     return percent;
+    }
 }
 
 function trequest(){
