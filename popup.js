@@ -49,11 +49,16 @@ window.onload = function (){
     console.log(window.location.hostname);
 }
 
+function addressFormat(address){
+    var q = address;
+    q = q.replace(/\s+/g, '+');
+    return q;
+}
+
 
 function eqrequest(address){
    //Manipulate address so that it can be used here
-    var q = address;
-    q = q.replace(/\s+/g, '+')
+    var q = addressFormat(address);
     console.log(q);
     var xhr = new XMLHttpRequest();
 	xhr.open('GET', 'http://api.openhazards.com/GetEarthquakeProbability?q=' + q + '&m=6&r=100', false);
