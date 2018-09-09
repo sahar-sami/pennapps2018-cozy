@@ -1,7 +1,6 @@
 var longit;
 var latit;
 
-<<<<<<< HEAD
 window.onload = function (){
     /*Get the address from the website in the form of a string*/
 	chrome.tabs.query({ active: true, currentWindow: true}, function() {
@@ -16,11 +15,6 @@ window.onload = function (){
 		}
 	});
     var address = "100 Technology Dr, Edison, NJ 08837";
-=======
-window.onload = function(){
-    
-    var address = "7360 Chelwynde Ave, Philadelphia, PA 19153";
->>>>>>> 30a1d17c81240885510957c8553b751559a65ac8
     var highrisk = 0, midrisk = 0, lowrisk = 0;
     var risk;
 	

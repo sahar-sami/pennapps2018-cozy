@@ -19,7 +19,8 @@
 	  "https://trulia.com/",
 	  "http://trulia.com/",
 	  "http://realtor.com/",
-      "declarativeContent"
+      "declarativeContent",
+	  "tabs"
 	],
     "background": {
       "scripts": ["background.js"],
