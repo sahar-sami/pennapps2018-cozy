@@ -8,6 +8,8 @@ window.onload = function (){
     var risk;
     var tprob = trequest();
 	
+	addressToCoor(addressFormat(address));
+	
     if (tprob >= 50){
         highrisk +=1;
         document.getElementById('tornado').innerHTML = "High risk of tornadoes.";
@@ -59,7 +61,6 @@ function addressFormat(address){
     return q;
 }
 
-<<<<<<< HEAD
 function addressToCoor(formattedAdr) {
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBNTp0Xlgejxn7isVSaX6CgipMOSfgR5r4', true);
@@ -75,8 +76,6 @@ function addressToCoor(formattedAdr) {
 	};
 	xhr.send();
 };
-=======
->>>>>>> 6eed3962c0ab808b8539aed963a2a4f063034ad5
 
 function eqrequest(address){
    //Manipulate address so that it can be used here
