@@ -34,7 +34,7 @@
            },
     "icons": {
         "16": "icon.png"
-    },
-	"content_security_policy": "script-src 'unsafe-inline'"
+    }
+	
 
   }

@@ -1,28 +1,19 @@
 var longit;
 var latit;
 
-window.onload = function (){
+
+function runExtension(){
     /*Get the address from the website in the form of a string*/
-	chrome.tabs.query({ active: true, currentWindow: true}, function() {
-		//for (var i = 0; i < tabs.length; i++)
-		if (typeof tabs === 'undefined') {
-			// the variable is defined
-			//chrome.tabs.query({ active: true, currentWindow: true}, checkActive());
-			console.log("not loaded yet");
-		}
-		else {
-			console.log("Length: " + tabs.length);
-		}
-	});
-    var address = "100 Technology Dr, Edison, NJ 08837";
+	
+    var address = document.getElementById('add').value;
+
     var highrisk = 0, midrisk = 0, lowrisk = 0;
     var risk;
 	
 	addressToCoor(addressFormat(address));
     	
     var tprob = trequest();
-	
-    hrequest();
+
 	
 	if (tprob >= 50){
         highrisk +=1;
@@ -56,11 +47,11 @@ window.onload = function (){
     }
     
     var hprob = hrequest();
-    if (hprob >= 0){
+    if (hprob >= 100){
         highrisk +=1; 
         document.getElementById('hurricane').innerHTML = "<span style = 'color: red'><b>High</b></span> risk of hurricanes.";
     }
-    else if (hprob <0){
+    else if (hprob <100 && hprob >= 20){
         midrisk +=1; 
         document.getElementById('hurricane').innerHTML = "<span style = 'color: yellow'><b>Slight</b></span> risk of hurricanes.";
     }
@@ -68,6 +59,9 @@ window.onload = function (){
         lowrisk +=1; 
         document.getElementById('hurricane').innerHTML = "<span style = 'color: green'><b>Low</b></span> risk of hurricanes.";
     }
+    
+    var haprob = harequest();
+    
     
     if (highrisk >= 1){
         risk = "high";
@@ -81,6 +75,10 @@ window.onload = function (){
     displayRisk(risk);
     console.log(window.location.hostname);
 }
+
+//window.onload = runExtension;
+
+document.getElementById('getaddress').onclick = runExtension;
 
 
 
@@ -205,8 +203,7 @@ function hrequest(){
 	
 	console.log("Entered hrequest");
 	
-	var latit = 40.550473; // Hardcoded location
-	var longit = -74.305870;
+
 	var request = new XMLHttpRequest();
 	
     request.open('GET', "http://surge.srcc.lsu.edu/files/globalpeaksurgedb.csv", false);  // `false` makes the request synchronous
@@ -277,6 +274,63 @@ function hrequest(){
     
     return matchArray.length;
 }
+
+function harequest(){var hailNum = 0;
+
+
+	var request = new XMLHttpRequest();
+	for (var x = 3; x < 8; x++){
+    var di = x.toString();
+    request.open('GET', "https://www.spc.noaa.gov/wcm/data/" +"201" + di +"_hail.csv", false);  // false makes the request synchronous
+	request.send(null);
+
+	if (request.status === 200) {
+	  //console.log(request.responseText);
+	  var dataset = request.responseText;
+	  var dataArray = dataset.split("\n");
+	  var dataArray2d = new Array();
+	  for (var i = 0; i < dataArray.length; i++) {
+		dataArray2d[i] = dataArray[i].split(",");
+	  }
+	  console.log(dataArray2d);
+	}
+	
+	var latInd;
+	var longInd;
+	var magInd;
+	for (var i = 0; i < dataArray2d[0].length; i++) {
+		if (dataArray2d[0][i] == "slat") {
+			latInd = i;
+		}
+		else if (dataArray2d[0][i] == "slon") {
+			longInd = i;
+		}
+		else if (dataArray2d[0][i] == "mag") {
+			magInd = i;
+		}
+	}
+	var matchArray = new Array();
+	
+	for (var i = 0; i < dataArray2d.length; i++) {
+		if (Math.round(latit * 10) / 10 == Math.round(dataArray2d[i][latInd] * 10) / 10) {
+			matchArray.push(i);
+		}
+	}
+	
+	for (var i = 0; i < matchArray.length; i++) {
+		if (Math.round(longit * 10) / 10 != Math.round(dataArray2d[i][longInd] * 10) / 10) {
+			matchArray.splice(i, 1);
+		}
+	}
+	
+	var magSum = 0;
+	for (var i = 0; i < matchArray.length; i++) {
+		magSum += parseInt(dataArray2d[matchArray[i]][magInd]);	
+	}
+     hailNum += matchArray.length;   
+}
+    console.log(hailNum);
+    return hailNum;}
 
 function checkActive(tabs) {
 	//for (var i = 0; i < tabs.length; i++)

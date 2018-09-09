@@ -3,12 +3,6 @@ html{
     
 }
 
-button {
-          height: 30px;
-          width: 30px;
-          outline: none;
-        }
-        
 body {
     background-color: #f7f7f9;
 }
@@ -48,4 +42,9 @@ div{
 #risk{
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+img
+{
+    outline: none;
 }

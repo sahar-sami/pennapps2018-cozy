@@ -3,18 +3,25 @@
     <head>
         <link rel="stylesheet" href="popupstyle.css">
         <link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet">
-        <script src = "popup.js">
             
-   </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   
+  
     </head>
     <body>
+        
         <div id = 'top'><h1> Cozy </h1></div>
-        <div><p id = 'risk'><img id = 'dial'></p></div>
+        <p>Copy the address: </p>
+        
+        <input id = 'add' type = 'text' value = '100 Technology Dr, Edison, NJ 08837'>
+        <button type = "button"  id = 'getaddress'>Submit</button>
+            
+        
+        <div><p id = 'risk'><img id = 'dial' src = "lowrisk.png"></p></div>
         <p id = 'earthquake'></p>
         <p id = 'tornado'></p>
         <p id = 'hurricane'></p>
         <p id = 'hail'></p>
+        <script src = "popup.js"></script>
     </body>
   </html>
  
