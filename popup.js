@@ -1,6 +1,7 @@
 var longit;
 var latit;
 
+<<<<<<< HEAD
 window.onload = function (){
     /*Get the address from the website in the form of a string*/
 	chrome.tabs.query({ active: true, currentWindow: true}, function() {
@@ -15,45 +16,64 @@ window.onload = function (){
 		}
 	});
     var address = "100 Technology Dr, Edison, NJ 08837";
+=======
+window.onload = function(){
+    
+    var address = "7360 Chelwynde Ave, Philadelphia, PA 19153";
+>>>>>>> 30a1d17c81240885510957c8553b751559a65ac8
     var highrisk = 0, midrisk = 0, lowrisk = 0;
     var risk;
-    var tprob = trequest();
 	
 	addressToCoor(addressFormat(address));
+    	
+    var tprob = trequest();
 	
     hrequest();
 	
 	if (tprob >= 50){
         highrisk +=1;
-        document.getElementById('tornado').innerHTML = "High risk of tornadoes.";
+        document.getElementById('tornado').innerHTML = "<span style = 'color: red'><b>High</b></span> risk of tornadoes.";
     }
     else if (tprob >= 20 && tprob <50){
         midrisk +=1;
-        document.getElementById('tornado').innerHTML = "Slight risk of tornadoes.";
+        document.getElementById('tornado').innerHTML = "<span style = 'color: yellow'><b>Slight</b></span> risk of tornadoes.";
     }
     else {
         lowrisk += 1;
-        document.getElementById('tornado').innerHTML = "Low risk of tornadoes.";
+        document.getElementById('tornado').innerHTML = "<span style = 'color: green'><b>Low</b></span> risk of tornadoes.";
+        document.getElementById('tornado').innerHTML = "<span style = 'color: green'><b>Low</b></span> risk of tornadoes.";
     }
     var eqprob = eqrequest(address);
     
     if (eqprob >= 25){
         highrisk += 1;
-        document.getElementById('earthquake').innerHTML = "High risk of earthquakes.";
+        document.getElementById('earthquake').innerHTML = "<span style = 'color: red'><b>High</b></span> risk of earthquakes.";
     }
     else if (eqprob >= 5 && eqprob < 25) {
         midrisk += 1;
-        document.getElementById('earthquake').innerHTML = "Slight risk of earthquakes.";
+        document.getElementById('earthquake').innerHTML = "<span style = 'color: yellow'><b>Slight</b></span> risk of earthquakes.";
     }
     else if (eqprob == null){
         document.getElementById('earthquake').innerHTML = "";
     } // say that data couldn't be found
     else {
         lowrisk += 1
-        document.getElementById('earthquake').innerHTML = "Low risk of earthquakes.";
+        document.getElementById('earthquake').innerHTML = "<span style = 'color: green'><b>Low</b></span> risk of earthquakes.";
     }
     
     var hprob = hrequest();
+    if (hprob >= 0){
+        highrisk +=1; 
+        document.getElementById('hurricane').innerHTML = "<span style = 'color: red'><b>High</b></span> risk of hurricanes.";
+    }
+    else if (hprob <0){
+        midrisk +=1; 
+        document.getElementById('hurricane').innerHTML = "<span style = 'color: yellow'><b>Slight</b></span> risk of hurricanes.";
+    }
+    else{
+        lowrisk +=1; 
+        document.getElementById('hurricane').innerHTML = "<span style = 'color: green'><b>Low</b></span> risk of hurricanes.";
+    }
     
     if (highrisk >= 1){
         risk = "high";
@@ -67,6 +87,8 @@ window.onload = function (){
     displayRisk(risk);
     console.log(window.location.hostname);
 }
+
+
 
 function addressFormat(address){
     var q = address;
@@ -181,7 +203,7 @@ function trequest(){
 }
 
 function displayRisk(risk){
-    document.getElementById('risk').innerHTML="<img id = 'dial' src = 'lowrisk.png'> This location has a " + risk + " risk of natural disasters.";
+    document.getElementById('risk').innerHTML="<img id = 'dial' src = 'lowrisk.png'> This location has a <b>" + risk + "</b> risk of natural disasters.";
     document.getElementById('dial').src=risk + "risk.png";
 }
 
