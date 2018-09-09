@@ -1,6 +1,6 @@
 html{
     width: 300px;
-    height: 300px;
+    
 }
 
 button {
@@ -15,8 +15,11 @@ body {
 
 h1 {
     color: #040751;
-    font-family: sans-serif;
+    font-family: 'Lobster Two', cursive;
     text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20pt;
 }
 
 #dial{
@@ -29,4 +32,20 @@ p{
     align-content: space-around;
     font-family: sans-serif;
     font-size: 16pt;
+    text-align: center;
+}
+
+#top{
+    background-color:#d3eaff;
+    height: 50px;
+}
+
+div{
+    background-color: #d3eaff;
+    height: 100px;
+}
+
+#risk{
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
